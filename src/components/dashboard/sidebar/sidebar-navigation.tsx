@@ -24,7 +24,7 @@ export default function SidebarNavigation() {
     {
       label: "Blogs",
       icon: <BookOpen className="w-5 h-5" />,
-      href: "/dashboard/shifts",
+      href: "/dashboard/blogs",
     },
     {
       label: "Library",
