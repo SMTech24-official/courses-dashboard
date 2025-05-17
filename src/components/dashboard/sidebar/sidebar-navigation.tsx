@@ -29,7 +29,7 @@ export default function SidebarNavigation() {
     {
       label: "Library",
       icon: <Library className="w-5 h-5" />,
-      href: "/dashboard/drivers",
+      href: "/dashboard/library",
     },
     {
       label: "Courses",
