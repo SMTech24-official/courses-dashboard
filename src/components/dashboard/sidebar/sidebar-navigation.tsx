@@ -34,7 +34,7 @@ export default function SidebarNavigation() {
     {
       label: "Courses",
       icon: <GraduationCap className="w-5 h-5" />,
-      href: "/dashboard/income",
+      href: "/dashboard/courses",
     },
     {
       label: "Settings",
