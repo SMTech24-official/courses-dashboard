@@ -15,7 +15,7 @@ import Summary from "@/components/dashboard/dashboardHome/Summary";
 export default function Dashboard() {
   return (
     <div className="">
-      <div className="container mx-auto">
+      <div className="container mx-auto m-5">
         <Summary />
         <div className="bg-white rounded-3xl p-4 mt-5 shadow-lg">
           {/* Header */}
