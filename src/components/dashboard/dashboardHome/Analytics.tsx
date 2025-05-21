@@ -1,8 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BarChart3, ChevronLeft, ChevronRight } from "lucide-react"
 import BarChartComponent from "./BarChartComponent"
 
+type CourseProps = {
+    allCourses: number;
+};
 
-const Analytics = () => {
+
+const Analytics = ({ summaryData }: { summaryData: CourseProps }) => {
+    if (!summaryData) {
+        return (
+            <section className="mb-6 rounded-xl bg-white p-6 shadow-sm">
+                <h2 className="mb-4 text-lg font-medium text-gray-800">Courses</h2>
+                <p className="text-center text-gray-500">Loading Courses...</p>
+            </section>
+        );
+    }
     return (
         <section className="rounded-xl bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-lg font-medium text-gray-800">Analytics</h2>
@@ -34,7 +47,7 @@ const Analytics = () => {
                         <div className="mb-2 flex justify-center">
                             <BarChart3 className="h-6 w-6 text-blue-800" />
                         </div>
-                        <p className="text-center text-4xl font-bold text-gray-800">523</p>
+                        <p className="text-center text-4xl font-bold text-gray-800">{summaryData?.allCourses}</p>
                         <p className="text-center text-sm text-gray-500">Total Course</p>
                     </div>
                 </div>
