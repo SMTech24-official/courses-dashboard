@@ -11,24 +11,22 @@ type SummaryProps = {
 };
 
 const Summary = ({ summaryData }: SummaryProps) => {
-    console.log(summaryData)
-
+    console.log('summaryData', summaryData);
     if (!summaryData) {
         return (
-            <section className="mb-6 rounded-xl bg-white p-6 shadow-sm">
+            <section className="mb-6 rounded-xl bg-white p-4 sm:p-6 shadow-sm">
                 <h2 className="mb-4 text-lg font-medium text-gray-800">Summary</h2>
                 <p className="text-center text-gray-500">Loading summary...</p>
             </section>
         );
     }
 
-
     return (
-        <section className="mb-6 rounded-xl bg-white p-6 shadow-sm">
+        <section className="mb-6 rounded-xl bg-white p-4 sm:p-6 shadow-sm">
             <h2 className="mb-4 text-lg font-medium text-gray-800">Summary</h2>
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <SummaryCard icon={<Video className="h-6 w-6 text-gray-700" />} count={summaryData?.allVideos} label="Total Videos" />
-                <SummaryCard icon={<GraduationCap className="h-6 w-6 text-gray-700" />} count={summaryData?.allStudents} label="Student" />
+                <SummaryCard icon={<GraduationCap className="h-6 w-6 text-gray-700" />} count={summaryData?.allStudents} label="Students" />
                 <SummaryCard icon={<BookIcon />} count={summaryData?.allTeachers} label="Teachers" />
                 <SummaryCard icon={<InfoIcon />} count={summaryData?.allActiveUsers} label="Online" />
             </div>
@@ -37,9 +35,9 @@ const Summary = ({ summaryData }: SummaryProps) => {
 };
 
 const SummaryCard = ({ icon, count, label }: { icon: React.ReactNode; count: number; label: string }) => (
-    <div className="rounded-lg bg-[#EDF3FF] border-2 p-6">
+    <div className="rounded-lg bg-[#EDF3FF] border-2 p-4 sm:p-6">
         <div className="mb-2 flex justify-center">{icon}</div>
-        <p className="text-center text-4xl font-bold text-gray-800">{count}</p>
+        <p className="text-center text-3xl sm:text-4xl font-bold text-gray-800">{count}</p>
         <p className="text-center text-sm text-gray-500">{label}</p>
     </div>
 );

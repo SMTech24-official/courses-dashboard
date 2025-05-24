@@ -1,7 +1,17 @@
 import Image from "next/image"
 
+type BlogProps = {
+  blog: {
+    title: string;
+    description: string;
+    thumbnail: string;
+    author: string;
+    createdAt: string;
+  };
+};
 
-const BlogCard = () => {
+
+const BlogCard = ({blog}: BlogProps) => {
   return (
     <div className="overflow-hidden rounded-lg">
       <div className="relative">

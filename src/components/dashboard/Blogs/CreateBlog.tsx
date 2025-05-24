@@ -5,7 +5,7 @@ import TotalBlogs from "./TotalBlogs"
 const CreateBlog = () => {
   return (
     <div className="p-5">
-        <TotalBlogs />
+        <TotalBlogs blog={{allBlogsCount: 0, adminBlogsCount: 0, teacherBlogsCount: 0}} />
         <section className="rounded-xl bg-white p-6 shadow-sm">
               <form>
                 {/* Thumbnail Upload */}
