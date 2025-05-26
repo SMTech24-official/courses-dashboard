@@ -1,16 +1,16 @@
 import { BookOpen, User, Users } from "lucide-react";
 
-type Blog = {
-    adminBlogsCount: number;
+type TotalBlogsProps = {
+  blogsData: {
     allBlogsCount: number;
     teacherBlogsCount: number;
+    adminBlogsCount: number;
+  };
 };
 
-interface TotalBlogsProps {
-  blog: Blog;
-}
 
-const TotalBlogs = ({ blog }: TotalBlogsProps) => {
+const TotalBlogs = ({blogsData }: TotalBlogsProps) => {
+    // console.log(blogsData);
     return (
         <section className="mb-6 rounded-xl bg-white p-4 sm:p-6 shadow-lg">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -21,7 +21,7 @@ const TotalBlogs = ({ blog }: TotalBlogsProps) => {
                             <BookOpen className="h-5 w-5" />
                         </div>
                         <div>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-800">{blog?.allBlogsCount}</p>
+                            <p className="text-xl sm:text-2xl font-bold text-gray-800">{blogsData?.allBlogsCount}</p>
                             <p className="text-sm text-gray-500">Total blogs</p>
                         </div>
                     </div>
@@ -35,7 +35,7 @@ const TotalBlogs = ({ blog }: TotalBlogsProps) => {
                         </div>
                         <div>
                             <p className="text-xl sm:text-2xl font-bold text-gray-800">
-                                {blog?.adminBlogsCount}
+                                {blogsData?.adminBlogsCount}
                             </p>
                             <p className="text-sm text-gray-500">Blog by admin</p>
                         </div>
@@ -49,7 +49,7 @@ const TotalBlogs = ({ blog }: TotalBlogsProps) => {
                             <Users className="h-5 w-5" />
                         </div>
                         <div>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-800">{blog?.teacherBlogsCount}</p>
+                            <p className="text-xl sm:text-2xl font-bold text-gray-800">{blogsData?.teacherBlogsCount || 0}</p>
                             <p className="text-sm text-gray-500">Blog by teacher</p>
                         </div>
                     </div>

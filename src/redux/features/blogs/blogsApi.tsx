@@ -19,6 +19,15 @@ const blogApi = baseApi.injectEndpoints({
             // invalidatesTags: ["allMemories"],
         }),
 
+        createBlog: build.mutation({
+            query: (blogData) => ({
+                url: `/blogs`,
+                method: "POST",
+                body: blogData,
+            }),
+            //   invalidatesTags: ["Blogs"], // Invalidate queries to refetch blogs
+        }),
+
 
     }),
 });
@@ -26,4 +35,5 @@ const blogApi = baseApi.injectEndpoints({
 export const {
     useAllBlogsCountQuery,
     useAllBlogsQuery,
+    useCreateBlogMutation,
 } = blogApi;

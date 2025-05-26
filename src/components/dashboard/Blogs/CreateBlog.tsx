@@ -1,74 +1,88 @@
-import { Cloud } from "lucide-react"
-import TotalBlogs from "./TotalBlogs"
-
+// src/components/CreateBlog.tsx
+"use client";
+import { useCreateBlogMutation } from "@/redux/features/blogs/blogsApi";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 const CreateBlog = () => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
+  const [createBlog, { isLoading, error }] = useCreateBlogMutation();
+  const router = useRouter();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      await createBlog({
+        title,
+        description,
+        thumbnail,
+      }).unwrap();
+      // Redirect to blogs list on success
+      router.push("/dashboard/blogs");
+    } catch (err) {
+      console.error("Failed to create blog:", err);
+    }
+  };
+
   return (
-    <div className="p-5">
-        <TotalBlogs blog={{allBlogsCount: 0, adminBlogsCount: 0, teacherBlogsCount: 0}} />
-        <section className="rounded-xl bg-white p-6 shadow-sm">
-              <form>
-                {/* Thumbnail Upload */}
-                <div className="mb-6">
-                  <label htmlFor="thumbnail" className="mb-2 block text-sm font-medium text-gray-700">
-                    Thumbnail
-                  </label>
-                  <div className="mt-1 flex justify-center rounded-lg border-2 border-dashed border-gray-300 px-6 py-10">
-                    <div className="space-y-1 text-center">
-                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-                        <Cloud className="h-6 w-6 text-blue-500" />
-                      </div>
-                      <div className="flex text-sm text-gray-600">
-                        <p className="text-center">Drag & drop your image here or click choose a file</p>
-                      </div>
-                      <button type="button" className="mt-2 text-sm font-medium text-blue-500 hover:text-blue-600">
-                        Choose a file
-                      </button>
-                      <input id="thumbnail" name="thumbnail" type="file" className="sr-only" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Blog Title */}
-                <div className="mb-6">
-                  <label htmlFor="title" className="mb-2 block text-sm font-medium text-gray-700">
-                    Blog Title
-                  </label>
-                  <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    placeholder="Write the title here..."
-                    className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  />
-                </div>
-
-                {/* Blog Body */}
-                <div className="mb-6">
-                  <label htmlFor="body" className="mb-2 block text-sm font-medium text-gray-700">
-                    Blog Body
-                  </label>
-                  <textarea
-                    id="body"
-                    name="body"
-                    rows={6}
-                    placeholder="Write the blog here..."
-                    className="w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  ></textarea>
-                </div>
-
-                {/* Save Button */}
-                <button
-                  type="submit"
-                  className="w-full rounded-lg bg-blue-500 py-3 text-center font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                  Save
-                </button>
-              </form>
-            </section>
-      
+    <div className="px-4 sm:px-6 lg:px-8 py-5">
+      <section className="relative rounded-xl bg-white p-4 sm:p-6 shadow-lg">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">Create New Blog</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+              Description
+            </label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              rows={4}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="thumbnail" className="block text-sm font-medium text-gray-700">
+              Thumbnail URL
+            </label>
+            <input
+              type="url"
+              id="thumbnail"
+              value={thumbnail}
+              onChange={(e) => setThumbnail(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              placeholder="https://example.com/image.jpg"
+            />
+          </div>
+          {error && <p className="text-red-500 text-sm">Error: {JSON.stringify(error)}</p>}
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 disabled:bg-gray-400"
+          >
+            {isLoading ? "Creating..." : "Create Blog"}
+          </button>
+        </form>
+      </section>
     </div>
-  )
-}
+  );
+};
 
-export default CreateBlog
+export default CreateBlog;
+
