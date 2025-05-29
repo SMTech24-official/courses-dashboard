@@ -20,10 +20,10 @@ const blogApi = baseApi.injectEndpoints({
         }),
 
         createBlog: build.mutation({
-            query: (blogData) => ({
+            query: (formData) => ({
                 url: `/blogs`,
                 method: "POST",
-                body: blogData,
+                body: formData,
             }),
             //   invalidatesTags: ["Blogs"], // Invalidate queries to refetch blogs
         }),

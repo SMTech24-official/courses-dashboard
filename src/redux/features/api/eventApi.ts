@@ -21,4 +21,4 @@ const eventApi = baseApi.injectEndpoints({
 })
 
 export const { useApproveEventMutation, useGetAllEventsQuery } = eventApi
-
+  

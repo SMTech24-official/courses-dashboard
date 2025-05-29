@@ -2,7 +2,7 @@ import type React from "react"
 import { Inter } from "next/font/google"
 import SidebarNavigation from "@/components/dashboard/sidebar/sidebar-navigation"
 import { ThemeProvider } from "next-themes"
-import DashboardHeader from "@/components/dashboard/DashboardHeader"
+// import DashboardHeader from "@/components/dashboard/DashboardHeader"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,7 +22,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light">
           <div className="bg-[#EDF3FF] pt-4">
             <div>
-              <DashboardHeader />
+              {/* <DashboardHeader /> */}
             </div>
             <div className="flex h-screen">
               <div className="w-64 border-r">

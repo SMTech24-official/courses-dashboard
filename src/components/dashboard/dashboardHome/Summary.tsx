@@ -8,15 +8,39 @@ type SummaryProps = {
         allTeachers: number;
         allActiveUsers: number;
     } | null | undefined;
+    isLoading?: boolean;
 };
 
-const Summary = ({ summaryData }: SummaryProps) => {
-    console.log('summaryData', summaryData);
+const Summary = ({ summaryData, isLoading = false }: SummaryProps) => {
+    if (isLoading) {
+        return (
+            <section className="mb-6 rounded-xl bg-white p-4 sm:p-6 shadow-sm">
+                <h2 className="mb-4 text-lg font-medium text-gray-800">Summary</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {[...Array(4)].map((_, index) => (
+                        <div key={index} className="rounded-lg bg-[#EDF3FF] border-2 p-4 sm:p-6">
+                            <div className="mb-2 flex justify-center">
+                                <div className="h-6 w-6 bg-gray-300 rounded-full animate-pulse"></div>
+                            </div>
+                            <div className="h-10 w-3/4 mx-auto bg-gray-300 rounded animate-pulse mb-2"></div>
+                            <div className="h-4 w-1/2 mx-auto bg-gray-300 rounded animate-pulse"></div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        );
+    }
+
     if (!summaryData) {
         return (
             <section className="mb-6 rounded-xl bg-white p-4 sm:p-6 shadow-sm">
                 <h2 className="mb-4 text-lg font-medium text-gray-800">Summary</h2>
-                <p className="text-center text-gray-500">Loading summary...</p>
+                <div className="flex items-center justify-center h-32">
+                    <div className="text-center">
+                        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500 mx-auto mb-2"></div>
+                        <p className="text-gray-500">Loading summary data...</p>
+                    </div>
+                </div>
             </section>
         );
     }
@@ -25,10 +49,10 @@ const Summary = ({ summaryData }: SummaryProps) => {
         <section className="mb-6 rounded-xl bg-white p-4 sm:p-6 shadow-sm">
             <h2 className="mb-4 text-lg font-medium text-gray-800">Summary</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <SummaryCard icon={<Video className="h-6 w-6 text-gray-700" />} count={summaryData?.allVideos} label="Total Videos" />
-                <SummaryCard icon={<GraduationCap className="h-6 w-6 text-gray-700" />} count={summaryData?.allStudents} label="Students" />
-                <SummaryCard icon={<BookIcon />} count={summaryData?.allTeachers} label="Teachers" />
-                <SummaryCard icon={<InfoIcon />} count={summaryData?.allActiveUsers} label="Online" />
+                <SummaryCard icon={<Video className="h-6 w-6 text-gray-700" />} count={summaryData.allVideos} label="Total Videos" />
+                <SummaryCard icon={<GraduationCap className="h-6 w-6 text-gray-700" />} count={summaryData.allStudents} label="Students" />
+                <SummaryCard icon={<BookIcon />} count={summaryData.allTeachers} label="Teachers" />
+                <SummaryCard icon={<InfoIcon />} count={summaryData.allActiveUsers} label="Online" />
             </div>
         </section>
     );
