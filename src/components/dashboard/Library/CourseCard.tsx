@@ -18,7 +18,7 @@ const CourseCard = ({library}: LibraryProps) => {
                         {/* People sitting back to back */}
                         <div className="relative z-10 flex items-center justify-center">
                             <Image
-                                src={library.thumbnailUrl}
+                                src={library.thumbnailUrl ?? "/courseCover.png"}
                                 alt="People working on UI/UX"
                                 width={256}
                                 height={128}
@@ -36,3 +36,4 @@ const CourseCard = ({library}: LibraryProps) => {
 }
 
 export default CourseCard
+
