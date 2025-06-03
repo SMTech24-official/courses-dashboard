@@ -18,10 +18,22 @@ const courseApi = baseApi.injectEndpoints({
       }),
       // invalidatesTags: ["allMemories"],
     }),
+
+
+    recommendCourse: build.mutation({
+      query: (courseId: string) => ({
+        url: `/courses/recommend/${courseId}`,
+        method: "POST",
+      }),
+      // Optionally refetch courses list after recommending
+      // invalidatesTags: ["allCourses"],
+    }),
+
   }),
 });
 
 export const {
   useAllCoursesQuery,
   useAllDashboardCountQuery,
+  useRecommendCourseMutation,
 } = courseApi;

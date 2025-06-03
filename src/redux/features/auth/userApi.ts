@@ -29,16 +29,16 @@ const userApi = baseApi.injectEndpoints({
       providesTags: ["allUsers"],
     }),
 
-
     userStatusUpdate: build.mutation({
-      query: ({id, body}) => ({  // Changed from 'data' to 'body' to match your usage
+      query: ({ id, body }) => ({
+        // Changed from 'data' to 'body' to match your usage
         url: `/users/user-status/${id}`,
         method: "PUT",
         body,
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: 'allUsers', id: arg.id },
-        'allUsers'
+        { type: "allUsers", id: arg.id },
+        "allUsers",
       ],
     }),
 
@@ -57,7 +57,6 @@ const userApi = baseApi.injectEndpoints({
       }),
     }),
 
-
     verifyOtp: build.mutation({
       query: (data: { email: string; otp: number }) => ({
         url: "/auth/verify-otp",
@@ -65,7 +64,7 @@ const userApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    
+
     resetPassword: build.mutation({
       query: (data: { password: string }) => ({
         url: "/auth/reset-password",
@@ -79,7 +78,19 @@ const userApi = baseApi.injectEndpoints({
         url: `/users/profile`,
         method: "PUT",
         body: formData,
-      }), 
+      }),
+    }),
+
+    changePassword: build.mutation({
+      query: (data: {
+        email: string;
+        oldPassword: string;
+        newPassword: string;
+      }) => ({
+        url: "/auth/change-password",
+        method: "PUT",
+        body: data,
+      }),
     }),
   }),
 });
@@ -94,4 +105,5 @@ export const {
   useVerifyOtpMutation,
   useResetPasswordMutation,
   useUpdateUserMutation,
+  useChangePasswordMutation,
 } = userApi;
