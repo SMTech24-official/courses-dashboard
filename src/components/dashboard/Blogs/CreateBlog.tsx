@@ -4,6 +4,7 @@ import { useCreateBlogMutation } from "@/redux/features/blogs/blogsApi";
 import { useRouter } from "next/navigation";
 import { useState, useRef, type ChangeEvent, type FormEvent } from "react";
 import { Upload } from "lucide-react";
+import Image from "next/image";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
@@ -78,7 +79,7 @@ const CreateBlog = () => {
               >
                 {thumbnailPreview ? (
                   <div className="flex flex-col items-center">
-                    <img
+                    <Image
                       src={thumbnailPreview}
                       alt="Thumbnail preview"
                       className="h-32 w-auto object-cover rounded-lg mb-3"

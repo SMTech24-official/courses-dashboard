@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useRecommendCourseMutation } from "@/redux/features/courses/coursesApi";
