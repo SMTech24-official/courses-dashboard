@@ -52,6 +52,11 @@ export default function SidebarNavigation() {
       href: "/dashboard/courses",
     },
     {
+      label: "Ads",
+      icon: <GraduationCap className="w-5 h-5" />,
+      href: "/dashboard/ads",
+    },
+    {
       label: "Settings",
       icon: <Settings className="w-5 h-5" />,
       href: "/dashboard/settings",
@@ -60,7 +65,7 @@ export default function SidebarNavigation() {
 
   return (
 
-    <div className="w-full md:w-64 bg-white rounded-xl p-4 ml-5 mt-5 space-y-6 shadow-lg">
+    <div className="w-full md:w-64 bg-white rounded-xl p-4 ml-5 mt-5 space-y-6 shadow-lg h-screen">
       {navItems.map((item) => (
         <Link
           key={item.href}

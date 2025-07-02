@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { useRecommendCourseMutation } from "@/redux/features/courses/coursesApi";
-import { ThumbsUp } from "lucide-react";
+import { ThumbsUp, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -20,9 +21,10 @@ type BlogProps = {
       role?: string;
     };
   };
+  onDelete?: (id: string) => void;
 };
 
-const CoursesCard = ({ blog }: BlogProps) => {
+const CoursesCard = ({ blog, onDelete }: BlogProps) => {
   const [recommendCourse, { isLoading }] = useRecommendCourseMutation();
   const [isRecommended, setIsRecommended] = useState(blog.recommended || false);
 
@@ -33,6 +35,12 @@ const CoursesCard = ({ blog }: BlogProps) => {
       setIsRecommended(true);
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to recommend course");
+    }
+  };
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(blog.id);
     }
   };
 
@@ -58,19 +66,30 @@ const CoursesCard = ({ blog }: BlogProps) => {
             {blog.user?.role ? `(${blog.user.role})` : ""}
           </p>
         </div>
-        <button
-          onClick={handleRecommend}
-          disabled={isLoading || isRecommended}
-          className={`flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium 
-            ${
+        <div className="flex items-center space-x-2">
+          <Button
+            onClick={handleDelete}
+            variant="outline"
+            size="sm"
+            className="text-gray-600 hover:text-red-600 hover:border-red-300 bg-transparent"
+          >
+            <Trash2 className="w-4 h-4" />
+          </Button>
+
+          <Button
+            onClick={handleRecommend}
+            disabled={isLoading || isRecommended}
+            size="sm"
+            className={`flex items-center gap-1 ${
               isRecommended
-                ? "bg-green-100 text-green-600"
-                : "bg-blue-100 text-blue-600 hover:bg-blue-200"
-            } disabled:opacity-50`}
-        >
-          <ThumbsUp className="h-3 w-3" />
-          <span>{isRecommended ? "Recommended" : "Make Recommended"}</span>
-        </button>
+                ? "bg-green-100 text-green-600 hover:bg-green-200"
+                : "bg-blue-600 text-white hover:bg-blue-700"
+            }`}
+          >
+            <ThumbsUp className="h-4 w-4" />
+            {isRecommended ? "Recommended" : "Recommend"}
+          </Button>
+        </div>
       </div>
     </div>
   );

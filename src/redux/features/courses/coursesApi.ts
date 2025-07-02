@@ -19,6 +19,14 @@ const courseApi = baseApi.injectEndpoints({
       // invalidatesTags: ["allMemories"],
     }),
 
+    deleteCourse: build.mutation({
+      query: (courseId: string) => ({
+        url: `/courses/${courseId}`,
+        method: "DELETE",
+      }),
+      // Optionally refetch courses list after deleting
+      // invalidatesTags: ["allCourses"],
+    }),
 
     recommendCourse: build.mutation({
       query: (courseId: string) => ({
@@ -35,5 +43,6 @@ const courseApi = baseApi.injectEndpoints({
 export const {
   useAllCoursesQuery,
   useAllDashboardCountQuery,
+  useDeleteCourseMutation,
   useRecommendCourseMutation,
 } = courseApi;

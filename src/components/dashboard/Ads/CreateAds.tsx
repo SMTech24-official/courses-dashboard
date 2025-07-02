@@ -1,18 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useCreateBlogMutation } from "@/redux/features/blogs/blogsApi";
 import { useRouter } from "next/navigation";
 import { useState, useRef, type ChangeEvent, type FormEvent } from "react";
 import { Upload } from "lucide-react";
+import { useCreateAdsMutation } from "@/redux/features/ads/ads";
 
-const CreateBlog = () => {
+const CreateAds = () => {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [thumbnailPreview, setThumbnailPreview] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [createBlog, { isLoading, error }] = useCreateBlogMutation();
+  const [createAds, { isLoading, error }] = useCreateAdsMutation();
   const router = useRouter();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,8 +44,7 @@ const CreateBlog = () => {
     }
 
     const textPayload = {
-      "title": title,
-      "description": description
+      "title": title
     }
 
     const formData = new FormData();
@@ -56,10 +54,10 @@ const CreateBlog = () => {
     console.log(formData);
 
     try {
-      await createBlog(formData).unwrap();
-      router.push("/dashboard/blogs");
+      await createAds(formData).unwrap();
+      router.push("/dashboard/ads");
     } catch (err) {
-      console.error("Failed to create blog:", err);
+      console.error("Failed to create Ads:", err);
     }
   };
 
@@ -113,7 +111,7 @@ const CreateBlog = () => {
             {/* Title */}
             <div>
               <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
-                Blog Title
+                Ads Title
               </label>
               <input
                 type="text"
@@ -121,26 +119,11 @@ const CreateBlog = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                placeholder="Enter blog title"
+                placeholder="Enter Ads title"
                 required
               />
             </div>
 
-            {/* Description */}
-            <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-                Blog Body
-              </label>
-              <textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={6}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                placeholder="Write your blog content here..."
-                required
-              />
-            </div>
 
             {/* Error Handling */}
             {error && (
@@ -157,7 +140,7 @@ const CreateBlog = () => {
               disabled={isLoading}
               className="w-full py-4 bg-blue-500 text-white rounded-xl text-lg font-medium hover:bg-blue-600 disabled:bg-gray-400"
             >
-              {isLoading ? "Creating..." : "Create Blog"}
+              {isLoading ? "Creating..." : "Create Ads"}
             </button>
           </form>
         </div>
@@ -166,4 +149,4 @@ const CreateBlog = () => {
   );
 };
 
-export default CreateBlog;
+export default CreateAds;

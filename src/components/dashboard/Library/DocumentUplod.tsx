@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 import { useCreateLibraryMutation } from "@/redux/features/library/libraryApi"
 import type React from "react"
@@ -5,7 +6,6 @@ import type React from "react"
 import { useRouter } from "next/navigation"
 import { type FormEvent, useState, useRef, type ChangeEvent } from "react"
 import { Upload } from "lucide-react"
-import Image from "next/image"
 
 const DocumentUpload = () => {
   const [title, setTitle] = useState("")
@@ -91,7 +91,7 @@ const DocumentUpload = () => {
               >
                 {thumbnailPreview ? (
                   <div className="flex flex-col items-center">
-                    <Image
+                    <img
                       src={thumbnailPreview || "/placeholder.svg"}
                       alt="Thumbnail preview"
                       className="h-32 w-auto object-cover rounded-lg mb-3"
