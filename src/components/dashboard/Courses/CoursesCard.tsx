@@ -12,7 +12,7 @@ type BlogProps = {
   blog: {
     id: string;
     thumbnailUrl?: string;
-    title?: string;
+    name?: string;
     description?: string;
     createdAt?: string | Date;
     recommended?: boolean;
@@ -60,7 +60,7 @@ const CoursesCard = ({ blog, onDelete }: BlogProps) => {
 
       <div className="flex items-center justify-between bg-white p-4">
         <div>
-          <h3 className="font-medium text-gray-800">{blog.title}</h3>
+          <h3 className="font-medium text-gray-800">{blog.name}</h3>
           <p className="text-xs text-gray-500">
             By: {blog.user?.username || "Unknown"}{" "}
             {blog.user?.role ? `(${blog.user.role})` : ""}
