@@ -10,7 +10,7 @@ import { Upload } from "lucide-react"
 const DocumentUpload = () => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  const [link, setLink] = useState("")
+  const [documentUrl, setDocumentUrl] = useState("")
   const [thumbnail, setThumbnail] = useState<File | null>(null)
   const [thumbnailPreview, setThumbnailPreview] = useState("")
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -51,7 +51,7 @@ const DocumentUpload = () => {
 
     const textPayload = {
       "title": title,
-      "description": description
+      "documentUrl": documentUrl,
     }
 
     const formData = new FormData();
@@ -64,7 +64,7 @@ const DocumentUpload = () => {
       // Reset the form
       setTitle("")
       setDescription("")
-      setLink("")
+      setDocumentUrl("")
       setThumbnail(null)
       setThumbnailPreview("")
       if (fileInputRef.current) fileInputRef.current.value = ""
@@ -139,8 +139,8 @@ const DocumentUpload = () => {
                 <input
                   type="url"
                   id="link"
-                  value={link}
-                  onChange={(e) => setLink(e.target.value)}
+                  value={documentUrl}
+                  onChange={(e) => setDocumentUrl(e.target.value)}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                   placeholder="Post link here..."
                 />
