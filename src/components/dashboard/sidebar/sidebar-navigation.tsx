@@ -61,6 +61,11 @@ export default function SidebarNavigation() {
       icon: <Settings className="w-5 h-5" />,
       href: "/dashboard/settings",
     },
+    {
+      label: "Sub Categories",
+      icon: <Settings className="w-5 h-5" />,
+      href: "/dashboard/subCatagory",
+    },
   ]
 
   return (

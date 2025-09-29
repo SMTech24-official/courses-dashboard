@@ -36,6 +36,7 @@ const courseApi = baseApi.injectEndpoints({
       // Optionally refetch courses list after recommending
       // invalidatesTags: ["allCourses"],
     }),
+    
 
   }),
 });
