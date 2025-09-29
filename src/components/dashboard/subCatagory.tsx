@@ -163,7 +163,7 @@ const SubCategoryPage = () => {
             <input
               id="name"
               type="text"
-              placeholder="e.g., SSC, JSCE, PLE"
+              placeholder="e.g.. JSCE, PLE"
               className="w-full rounded-xl border px-3 py-2 outline-none focus:ring"
               {...register("name", { required: "Name is required", minLength: 2 })}
             />
