@@ -129,7 +129,7 @@ const SubCategoryList: React.FC = () => {
               <th className="sticky left-0 z-10 border-b px-4 py-3">#</th>
               <th className="border-b px-4 py-3">Category Name</th>
               <th className="border-b px-4 py-3">SubCategory Name</th>
-              <th className="border-b px-4 py-3">SubCategory2</th>
+              <th className="border-b px-4 py-3">Subject</th>
               <th className="border-b px-4 py-3">Country</th>
               <th className="border-b px-4 py-3 text-right">Actions</th>
             </tr>
