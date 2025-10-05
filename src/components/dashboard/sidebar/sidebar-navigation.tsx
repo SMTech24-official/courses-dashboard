@@ -70,7 +70,12 @@ export default function SidebarNavigation() {
       label: " Sub Categories List",
       icon: <Settings className="w-5 h-5" />,
       href: "/dashboard/getSubCatagory",
-    }
+    },
+    {
+      label: " Subject",
+      icon: <Settings className="w-5 h-5" />,
+      href: "/dashboard/subject",
+    },
   ]
 
   return (

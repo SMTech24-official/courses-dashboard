@@ -1,15 +1,19 @@
 'use client';
-import { SubCategory, useDeleteSubCategoryMutation, useGetAllSubCategoriesQuery } from "@/redux/features/api/catagory";
+import { SubCategory, useDeleteSubCategoryMutation, useDeleteSubCategory2Mutation, useGetAllSubCategoriesQuery } from "@/redux/features/api/catagory";
 import React, { useMemo, useState } from "react";
 
 const SubCategoryList: React.FC = () => {
   const { data, isLoading, isError, error, refetch } = useGetAllSubCategoriesQuery();
   const [deleteSubCategory, { isLoading: deleting }] = useDeleteSubCategoryMutation();
+  const [deleteSubCategory2] = useDeleteSubCategory2Mutation();
 
   console.log("SubCategory Data:", data); // Debug: Check if the data is coming
 
   // optional: quick filter by country
   const [countryFilter, setCountryFilter] = useState<string>("");
+
+  // State to track which dropdown is expanded
+  const [expandedDropdown, setExpandedDropdown] = useState<string | null>(null);
 
   // Ensure that data is an array
   const rows = useMemo<SubCategory[]>(() => {
@@ -72,6 +76,18 @@ const SubCategoryList: React.FC = () => {
     } catch (e) {
       console.error(e);
       alert("Failed to delete. Please try again.");
+    }
+  };
+
+  const handleDeleteSubCategory2 = async (id: string, name?: string) => {
+    const ok = window.confirm(`Delete SubCategory2${name ? ` "${name}"` : ""}?`);
+    if (!ok) return;
+    try {
+      await deleteSubCategory2(id).unwrap();
+      refetch();
+    } catch (e) {
+      console.error(e);
+      alert("Failed to delete SubCategory2. Please try again.");
     }
   };
 
@@ -149,26 +165,57 @@ const SubCategoryList: React.FC = () => {
                     {row.category?.name ?? "—"}
                   </td>
                   <td className="px-4 py-3 font-medium">{row.name}</td>
-                  {/* SubCategory2 dropdown aligned with row */}
+                  {/* SubCategory2 dropdown with delete icons */}
                   <td className="px-4 py-3">
                     {(row.subcategories2 ?? []).length > 0 ? (
-                      <select
-                        className="w-full rounded-lg border px-2 py-1 appearance-none bg-white pr-8 cursor-pointer"
-                        style={{
-                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
-                          backgroundPosition: 'right 0.5rem center',
-                          backgroundRepeat: 'no-repeat',
-                          backgroundSize: '1.5em 1.5em'
-                        }}
-                        value={row.subcategories2?.[0]?.id || ""}
-                        onChange={() => {}}
-                      >
-                        {row.subcategories2?.map((sc2) => (
-                          <option key={sc2.id} value={sc2.id}>
-                            {sc2.name}
-                          </option>
-                        ))}
-                      </select>
+                      <div className="relative">
+                        <div 
+                          className="flex items-center gap-2 cursor-pointer rounded-lg border bg-white px-3 py-2 hover:border-gray-400"
+                          onClick={() => setExpandedDropdown(expandedDropdown === row.id ? null : row.id)}
+                        >
+                          <span className="flex-1 text-sm">
+                            {row.subcategories2?.[0]?.name}
+                            {row.subcategories2 && row.subcategories2.length > 1 && (
+                              <span className="ml-2 text-xs text-gray-500">
+                                (+{row.subcategories2.length - 1} more)
+                              </span>
+                            )}
+                          </span>
+                          <svg 
+                            className={`h-4 w-4 text-gray-600 transition-transform ${expandedDropdown === row.id ? 'rotate-180' : ''}`}
+                            fill="none" 
+                            viewBox="0 0 20 20"
+                          >
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 8l4 4 4-4"/>
+                          </svg>
+                        </div>
+                        
+                        {/* Dropdown list */}
+                        {expandedDropdown === row.id && (
+                          <div className="absolute left-0 right-0 top-full z-20 mt-1 max-h-48 overflow-y-auto rounded-lg border bg-white shadow-lg">
+                            {(row.subcategories2 || []).map((sc2) => (
+                              <div 
+                                key={sc2.id}
+                                className="flex items-center justify-between gap-2 border-b px-3 py-2 hover:bg-gray-50 last:border-b-0"
+                              >
+                                <span className="flex-1 text-sm">{sc2.name}</span>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleDeleteSubCategory2(sc2.id, sc2.name);
+                                  }}
+                                  className="rounded p-1 text-red-600 hover:bg-red-50"
+                                  title="Delete SubCategory2"
+                                >
+                                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                  </svg>
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     ) : (
                       <span className="text-gray-400">—</span>
                     )}
