@@ -67,6 +67,8 @@ const SubCategoryList: React.FC = () => {
     if (!ok) return;
     try {
       await deleteSubCategory(id).unwrap();
+      // Auto-refresh data after successful deletion
+      refetch();
     } catch (e) {
       console.error(e);
       alert("Failed to delete. Please try again.");
@@ -149,18 +151,27 @@ const SubCategoryList: React.FC = () => {
                   <td className="px-4 py-3 font-medium">{row.name}</td>
                   {/* SubCategory2 dropdown aligned with row */}
                   <td className="px-4 py-3">
-                    <select
-                      className="w-full rounded-lg border px-2 py-1"
-                      value="" // read-only dropdown
-                      onChange={() => {}}
-                    >
-                      <option value="">— Select —</option>
-                      {(row.subcategories2 ?? []).map((sc2) => (
-                        <option key={sc2.id} value={sc2.id}>
-                          {sc2.name}
-                        </option>
-                      ))}
-                    </select>
+                    {(row.subcategories2 ?? []).length > 0 ? (
+                      <select
+                        className="w-full rounded-lg border px-2 py-1 appearance-none bg-white pr-8 cursor-pointer"
+                        style={{
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
+                          backgroundPosition: 'right 0.5rem center',
+                          backgroundRepeat: 'no-repeat',
+                          backgroundSize: '1.5em 1.5em'
+                        }}
+                        value={row.subcategories2?.[0]?.id || ""}
+                        onChange={() => {}}
+                      >
+                        {row.subcategories2?.map((sc2) => (
+                          <option key={sc2.id} value={sc2.id}>
+                            {sc2.name}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <span className="text-gray-400">—</span>
+                    )}
                   </td>
                   <td className="px-4 py-3">
                     {row.country ?? "—"}
